@@ -54,3 +54,20 @@ yum install ibus-libpinyin -y
 
 # office
 yum install -y libreoffice
+# ssr and Proxy
+yum install -y privoxy
+echo 'forward-socks5 / 127.0.0.1:1080 .' >> /etc/privoxy/config
+systemctl enable privoxy
+
+
+## Configuration ##
+
+#Setup GUI as default
+systemctl set-default graphical.target
+
+#Disable SELinux
+setenforce permissive
+sed -i -e "s/SELINUX=enforcing$/SELINUX=disabled/g" /etc/selinux/config
+
+#add user to sudo
+echo "neo     ALL=(ALL) NOPASSWD:       ALL" >> /etc/sudoers
